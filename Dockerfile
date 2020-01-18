@@ -1,5 +1,5 @@
 # Dockerfile for ELK stack
-# Elasticsearch, Logstash, Kibana 7.4.0
+# Elasticsearch, Logstash, Kibana 7.5.1
 
 # Build with:
 # docker build -t <repo-user>/elk .
@@ -8,27 +8,27 @@
 # docker run -p 5601:5601 -p 9200:9200 -p 5044:5044 -it --name elk <repo-user>/elk
 
 FROM phusion/baseimage:0.11
-MAINTAINER Sebastien Pujadas http://pujadas.net
+MAINTAINER Sebastien Pujadas http://pujadas.net (updated by IP)
 ENV \
- REFRESHED_AT=2017-02-28
+ REFRESHED_AT=2020-01-18
 
 
 ###############################################################################
 #                                INSTALLATION
 ###############################################################################
 
-### install prerequisites (cURL, gosu, JDK, tzdata)
+### install prerequisites (cURL, gosu, tzdata)
 
 RUN set -x \
  && apt update -qq \
- && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata openjdk-8-jdk \
+ && apt install -qqy --no-install-recommends ca-certificates curl gosu tzdata \
  && apt clean \
  && rm -rf /var/lib/apt/lists/* \
  && gosu nobody true \
  && set +x
 
 ### install Elasticsearch
-ARG ELK_VERSION=7.4.0
+ARG ELK_VERSION=7.5.1
 ENV \
  ES_VERSION=${ELK_VERSION} \
  ES_HOME=/opt/elasticsearch \
@@ -37,7 +37,7 @@ ENV \
 
 # note you can't define an env var that references another one in the same block (docker layer)
 ENV \
- JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre \
+ JAVA_HOME=${ES_HOME}/jdk \
  ES_PACKAGE=elasticsearch-${ES_VERSION}-linux-x86_64.tar.gz \
  ES_GID=991 \
  ES_UID=991 \
