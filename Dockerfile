@@ -1,5 +1,5 @@
 # Dockerfile for ELK stack
-# Elasticsearch, Logstash, Kibana 7.6.2
+# Elasticsearch, Logstash, Kibana 7.7.0
 
 # Build with:
 # docker build -t <repo-user>/elk .
@@ -10,14 +10,14 @@
 FROM phusion/baseimage:0.11
 MAINTAINER Sebastien Pujadas http://pujadas.net (updated by IP)
 ENV \
- REFRESHED_AT=2020-05-04
+ REFRESHED_AT=2020-05-14
 
 
 ###############################################################################
 #                                INSTALLATION
 ###############################################################################
 
-### install prerequisites (cURL, gosu, tzdata, nano)
+### install prerequisites (cURL, gosu, tzdata)
 
 RUN set -x \
  && apt update -qq \
@@ -28,7 +28,7 @@ RUN set -x \
  && set +x
 
 ### install Elasticsearch
-ARG ELK_VERSION=7.6.2
+ARG ELK_VERSION=7.7.0
 ENV \
  ES_VERSION=${ELK_VERSION} \
  ES_HOME=/opt/elasticsearch \
